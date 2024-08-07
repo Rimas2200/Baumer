@@ -4,9 +4,12 @@
 Программа для захвата видео с камеры Baumer и его отображения в цвете.
 """
 
+import os
 import sys
 import cv2
 import neoapi
+
+save_dir = 'C:/Users/User/PycharmProjects/pythonProject2/Baumer/path_to_images'
 
 try:
     camera = neoapi.Cam()
@@ -30,15 +33,20 @@ try:
     title = 'Camera Stream'
     cv2.namedWindow(title, cv2.WINDOW_NORMAL)
 
-    for cnt in range(0, 200):
+    for cnt in range(0, 20000):
         img = camera.GetImage().GetNPArray()
 
         cv2.resizeWindow(title, 1920, 1080)
 
         cv2.imshow(title, img)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
             break
+        elif key == ord('p'):
+            filename = os.path.join(save_dir, f"photo_{cnt}.jpg")
+            cv2.imwrite(filename, img)
+            print(f"Saved {filename}")
 
     cv2.destroyAllWindows()
 
