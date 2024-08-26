@@ -1,7 +1,7 @@
 import cv2
 
-img1 = cv2.imread('test/position_1_object.jpg', cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread('test/position_2_object.jpg', cv2.IMREAD_GRAYSCALE)
+img1 = cv2.imread('SIFT_ORM_SURF/photo_24.jpg', cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread('SIFT_ORM_SURF/photo_111.jpg', cv2.IMREAD_GRAYSCALE)
 
 # Инициализация детектора и дескриптора SIFT
 sift = cv2.SIFT_create()
