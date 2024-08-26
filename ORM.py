@@ -1,7 +1,7 @@
 import cv2
 
-img1 = cv2.imread('test/position_1_field.jpg', cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread('test/position_2_field.jpg', cv2.IMREAD_GRAYSCALE)
+img1 = cv2.imread('SIFT_ORM_SURF/photo_24.jpg', cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread('SIFT_ORM_SURF/photo_111.jpg', cv2.IMREAD_GRAYSCALE)
 
 # Предварительная обработка изображений
 img1 = cv2.equalizeHist(img1)
