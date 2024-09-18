@@ -31,7 +31,7 @@ def hessian_matrix(I, sigma):
     Ixx = gaussian_filter(I, sigma=sigma, order=(2, 0))
     # Iyy: Вторая производная по y
     Iyy = gaussian_filter(I, sigma=sigma, order=(0, 2))
-    # Ixy: Смешанная производная (сначала по x, затем по y)
+    # Ixy: Смешанная производная (x,y)
     Ixy = gaussian_filter(I, sigma=sigma, order=(1, 1))
     return Ixx, Iyy, Ixy
 
@@ -44,10 +44,10 @@ def determinant_hessian(Ixx, Iyy, Ixy):
 def detect_keypoints(I, hessian_threshold, sigma=1.0):
     # Вычисляем компоненты матрицы Гессиана
     Ixx, Iyy, Ixy = hessian_matrix(I, sigma)
-    # Вычисляем детерминант матрицы Гессиана
+    # Вычисляем определитель матрицы Гессиана
     detH = determinant_hessian(Ixx, Iyy, Ixy)
 
-    # Находим позиции ключевых точек, где детерминант превышает пороговое значение
+    # Находим позиции ключевых точек, где определитель превышает пороговое значение
     keypoints = np.argwhere(detH > hessian_threshold)
     return keypoints
 
@@ -77,10 +77,10 @@ def compute_descriptors(I, keypoints, patch_size=16):
 def knn_match(descriptors1, descriptors2, k=2):
     # Проверяем, что массивы дескрипторов не пусты
     if descriptors1.size == 0 or descriptors2.size == 0:
-        raise ValueError("One of the descriptors arrays is empty.")
+        raise ValueError("Нет дескрипторов")
     # Проверяем, что дескрипторы имеют правильную форму (двумерный массив)
     if len(descriptors1.shape) != 2 or len(descriptors2.shape) != 2:
-        raise ValueError("Descriptors must be a 2D array of shape (n, m).")
+        raise ValueError("ERROR")
 
     # Создаем KD-дерево для быстрого поиска ближайших соседей
     tree = KDTree(descriptors2)
@@ -120,8 +120,8 @@ def draw_matches(img1, keypoints1, img2, keypoints2, good_matches):
     return img_out
 
 
-img1 = cv2.imread('SIFT_ORM_SURF/photo_24.jpg', cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread('SIFT_ORM_SURF/photo_111.jpg', cv2.IMREAD_GRAYSCALE)
+img1 = cv2.imread('photo/photo_62-Photoroom.png', cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread('photo/photo_24-Photoroom.png', cv2.IMREAD_GRAYSCALE)
 
 # Порог для детекции ключевых точек
 hessian_threshold = 252
